@@ -1,0 +1,136 @@
+/*General Stylings*/
+/* lato-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  src: url(./fonts/lato-v24-latin-regular.woff2) format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 20px;
+  --color-1: #913dc8;
+  --color-2: #76b6f4;
+  --color-3: white;
+  --color-4: #f2f2f2;
+  margin: 0;
+  font-family: Lato;
+}
+body {
+  display: grid;
+  height: 100vh;
+  grid-template-areas:
+    "header header header"
+    ". list ."
+    ". filters ."
+    ". . .";
+  grid-template-rows: 3fr 4fr 1.25fr 0.25fr;
+  grid-template-columns: 0.35fr 0.6fr 0.35fr;
+  position: relative;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 0.35fr 0.6fr 0.35fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    ". . ."
+    ". input ."
+    ". . .";
+  grid-area: header;
+  background: linear-gradient(132deg, var(--color-1) 14%, var(--color-2) 89%);
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  color: var(--color-3);
+  margin: 1rem;
+}
+
+.ctn-input {
+  grid-area: input;
+  background-color: var(--color-3);
+  margin: 1rem;
+  box-shadow: 0rem 1.5rem 2rem 17px rgba(0, 0, 0, 0.1);
+  border-radius: 0.3rem;
+}
+
+#task-input {
+  width: 20rem;
+  height: 3rem;
+  border: none;
+  padding: 1rem;
+  margin: 0.25rem;
+}
+
+/*Task Section Stylings*/
+.ctn-tasks {
+  grid-area: list;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: var(--color-3);
+  margin-top: -4rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  position: relative;
+  z-index: 3;
+  border-radius: 0.3rem;
+  box-shadow: 0px 25px 59px -13px rgba(0, 0, 0, 0.1);
+}
+/*Filter Section Stylings*/
+.ctn-filter {
+  grid-area: filters;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: max-content;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 0rem 1.5rem 2rem 17px rgba(0, 0, 0, 0.1);
+  border-radius: 0.3rem;
+}
+/*CLEAR Button-Stylings*/
+.buttons {
+  width: 8rem;
+  height: 2rem;
+  margin: 0.25rem;
+  border: none;
+  position: relative;
+  border-radius: 0.5rem;
+  z-index: 1;
+  background: linear-gradient(to right, var(--color-1), var(--color-2));
+  cursor: pointer;
+}
+.buttons::before {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  right: 0.15rem;
+  bottom: 0.15rem;
+  left: 0.15rem;
+  border-radius: 0.3rem;
+  background-color: white;
+  z-index: -1;
+  transition: 200ms;
+}
+
+.buttons::after {
+  content: attr(data);
+  font-size: 0.2rem;
+  background: linear-gradient(to right, var(--color-1), var(--color-2));
+  color: transparent;
+  transition: 200ms;
+}
+
+/*.empty-space {
+  grid-area: empty;
+}*/

@@ -28,17 +28,17 @@ body {
     ". list ."
     ". filters ."
     ". . .";
+  grid-template-columns: 1fr 1.5fr 1fr;
   grid-template-rows: 3fr 4fr 1.25fr 0.25fr;
-  grid-template-columns: 0.35fr 0.6fr 0.35fr;
   position: relative;
 }
 
 header {
   display: grid;
-  grid-template-columns: 0.35fr 0.6fr 0.35fr;
+  grid-template-columns: 1fr 1.5fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
-    ". . ."
+    "heading heading ."
     ". input ."
     ". . .";
   grid-area: header;
@@ -47,24 +47,29 @@ header {
   z-index: 1;
 }
 
-h1 {
+.heading {
+  grid-area: heading;
   color: var(--color-3);
   margin: 1rem;
 }
 
 .ctn-input {
   grid-area: input;
+  display: flex;
+  justify-content: space-around;
   background-color: var(--color-3);
-  margin: 1rem;
-  box-shadow: 0rem 1.5rem 2rem 17px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  height: max-content;
+  margin: 0.5rem;
+  padding: 0.25rem;
   border-radius: 0.3rem;
 }
 
 #task-input {
-  width: 20rem;
+  min-width: 0;
   height: 3rem;
   border: none;
-  padding: 1rem;
+  padding: 0.25rem;
   margin: 0.25rem;
 }
 
@@ -78,14 +83,15 @@ h1 {
   background-color: var(--color-3);
   margin-top: -4rem;
   margin-bottom: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   padding: 0.5rem;
   position: relative;
   z-index: 3;
   border-radius: 0.3rem;
   box-shadow: 0px 25px 59px -13px rgba(0, 0, 0, 0.1);
 }
+
 /*Filter Section Stylings*/
 .ctn-filter {
   grid-area: filters;
@@ -93,14 +99,14 @@ h1 {
   justify-content: space-around;
   align-items: center;
   height: max-content;
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 1rem;
   box-shadow: 0rem 1.5rem 2rem 17px rgba(0, 0, 0, 0.1);
   border-radius: 0.3rem;
 }
-/*CLEAR Button-Stylings*/
+/*Button-Stylings*/
 .buttons {
-  width: 8rem;
+  width: 7rem;
   height: 2rem;
   margin: 0.25rem;
   border: none;
@@ -134,3 +140,35 @@ h1 {
 /*.empty-space {
   grid-area: empty;
 }*/
+
+@media only screen and (max-width: 981px) {
+  html {
+    font-size: 15px;
+  }
+
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  header {
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+  }
+
+  .ctn-tasks {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .ctn-input {
+    margin: 0.25rem;
+    padding: 0.25rem;
+  }
+
+  #task-input {
+    flex-shrink: 1;
+    height: 1rem;
+    padding: 0.2rem;
+  }
+}

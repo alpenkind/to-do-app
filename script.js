@@ -1,36 +1,60 @@
 console.log("TEST");
 
-//Hinzufügen neuer Todos
-const addButton = document.querySelector(".btn.add");
-const input = document.querySelector("#task-input");
+//Variables
+const todoInput = document.querySelector("#task-input");
 const taskContainer = document.querySelector(".ctn-tasks");
+const form = document.querySelector(".ctn-input");
+let todos = [];
 
-function addInput(params) {
-  if (inputValue !== " ") {
-    //new task-ctn
-    const taskItem = document.createElement("div");
-    taskItem.classList.add("task-item");
+//add todos to todolist
+function addTodo(event) {
+  event.preventDefault();
 
-    //new checkbox
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
+  const inputValue = todoInput.value.trim();
 
-    //new span
-    const taskText = document.createElement("span");
-    taskText.textContent = inputValue;
+  if (inputValue !== "") {
+    //creating object
+    const newTodo = {
+      description: inputValue,
+      done: false,
+      id: Math.floor(Math.random() * 99999999),
+    };
+    //Push & render
+    todos.push(newTodo);
+    renderTodo(newTodo);
+    //TEST
+    console.log(todos);
+    //Clear Value
+    todoInput.value = "";
 
-    //adding checkbox & span to taskItem div
-    taskItem.appendChild(checkbox);
-    taskItem.appendChild(taskText);
-
-    //adding to ctn-tasks
-    taskContainer.appendChild(taskItem);
+    //TEST
+    console.log(newTodo);
   }
 }
+//Creating new todo
+function renderTodo(todo) {
+  const taskItem = document.createElement("div");
+  taskItem.classList.add("task-item");
+  //Create Checkbox and connect with Object status done: true/false
+  const checkBox = document.createElement("input");
+  checkBox.type = "checkbox";
+  checkBox.id = "task-" + todo.id;
+  checkBox.checked = todo.done;
+  checkbox.todoObj = todo;
 
-addButton.addEventListener("click", addInput);
+  //Create label, set ID and connect with Object description
+  const taskText = document.createElement("label");
+  taskText.textContent = todo.description;
+  taskText.setAttribute("for", "task-" + todo.id);
 
-// Erledigt-Status von Todos
+  //Add checkbox and label to task-Item (html-div)
+  taskItem.appendChild(checkBox);
+  taskItem.appendChild(taskText);
+  //add to task-container
+  taskContainer.appendChild(taskItem);
+}
+//Eventlistener submit input
+form.addEventListener("submit", addTodo);
 
 // Duplikatprüfung
 

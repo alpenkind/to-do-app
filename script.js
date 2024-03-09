@@ -5,6 +5,7 @@ const todoInput = document.querySelector("#task-input");
 const taskContainer = document.querySelector(".ctn-tasks");
 const form = document.querySelector(".ctn-input");
 let todos = [];
+console.log(todos);
 
 //add todos to todolist
 function addTodo(event) {
@@ -19,8 +20,10 @@ function addTodo(event) {
       done: false,
       id: Math.floor(Math.random() * 99999999),
     };
+
     //Push & render
     todos.push(newTodo);
+    console.log(todos);
     renderTodo(newTodo);
     //TEST
     console.log(todos);
@@ -31,7 +34,7 @@ function addTodo(event) {
     console.log(newTodo);
   }
 }
-//Creating new todo
+//Creating new todo ✅
 function renderTodo(todo) {
   const taskItem = document.createElement("div");
   taskItem.classList.add("task-item");
@@ -39,27 +42,104 @@ function renderTodo(todo) {
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
   checkBox.id = "task-" + todo.id;
-  checkBox.checked = todo.done;
-  checkbox.todoObj = todo;
+  //TEST
+  console.log("log in renderTodo : ", todo.done);
+  checkBox.todoObj = todo;
 
   //Create label, set ID and connect with Object description
   const taskText = document.createElement("label");
   taskText.textContent = todo.description;
   taskText.setAttribute("for", "task-" + todo.id);
 
-  //Add checkbox and label to task-Item (html-div)
+  //Add checkbox and label to task-Item (html-div task-item)
   taskItem.appendChild(checkBox);
   taskItem.appendChild(taskText);
-  //add to task-container
+  //add to task-container (html-div ctn-task)
   taskContainer.appendChild(taskItem);
+}
+
+//Toggle Checkbox
+function toggleCheckbox(event) {
+  if (event.target.type === "checkbox") {
+    const todo = event.target.todoObj;
+    todo.done = event.target.checked;
+    console.log("Updated todo:", todo);
+  }
 }
 //Eventlistener submit input
 form.addEventListener("submit", addTodo);
 
-// Duplikatprüfung
+//Eventlistener Checkbox checked
+taskContainer.addEventListener("change", toggleCheckbox);
 
-//Lokaler Speicher Adaption
+// Duplikatprüfung
 
 //Filtern von Todos
 
+const active = document.querySelector("#active");
+const done = document.querySelector("#done");
+const all = document.querySelector("#all");
+
+function showTodos(filter) {
+  const taskItems = document.querySelectorAll(".task-item");
+
+  taskItems.forEach(function (item) {
+    switch (filter) {
+      case "all":
+        item.style.display = "block";
+        break;
+      case "active":
+        if (!item.querySelector('input[type="checkbox"]').checked) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+        break;
+      case "done":
+        if (item.querySelector('input[type="checkbox"]').checked) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+        break;
+    }
+  });
+}
+
+// Eventlistener for filteroption "Active"
+active.addEventListener("click", function () {
+  showTodos("active");
+});
+
+// Eventlistener for filteroption  "Done"
+done.addEventListener("click", function () {
+  showTodos("done");
+});
+
+// Eventlistener for filteroption  "All"
+all.addEventListener("click", function () {
+  showTodos("all");
+});
+
 //Erledigte ToDos entfernen
+const clear = document.querySelector(".btn-clear");
+
+function removeDone(_event) {
+  // Iteriere rückwärts durch das Array
+  for (let i = todos.length - 1; i >= 0; i--) {
+    if (todos[i].done) {
+      //Get the ID of the task which is supposed to be deleted
+      const checkboxId = "task-" + todos[i].id;
+
+      const taskItem = document.getElementById(checkboxId).parentNode;
+
+      taskItem.remove();
+
+      todos.splice(i, 1);
+    }
+  }
+}
+
+clear.addEventListener("click", removeDone);
+
+//Lokaler Speicher Adaption

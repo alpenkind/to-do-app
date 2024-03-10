@@ -7,6 +7,24 @@ const form = document.querySelector(".ctn-input");
 let todos = [];
 console.log(todos);
 
+//Todos im Lokalen Speicher speichern und abrufen ✅
+
+// Function to save todos to local storage
+function saveTodos() {
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+// Function to load todos from local storage
+function loadTodos() {
+  const storedTodos = localStorage.getItem("todos");
+  if (storedTodos !== null) {
+    todos = JSON.parse(storedTodos);
+    todos.forEach(function (todo) {
+      renderTodo(todo);
+    });
+  }
+}
+
 //add todos to todolist
 function addTodo(event) {
   event.preventDefault();
@@ -33,6 +51,7 @@ function addTodo(event) {
     //TEST
     console.log(newTodo);
   }
+  saveTodos();
 }
 //Creating new todo ✅
 function renderTodo(todo) {
@@ -65,6 +84,7 @@ function toggleCheckbox(event) {
     todo.done = event.target.checked;
     console.log("Updated todo:", todo);
   }
+  saveTodos();
 }
 //Eventlistener submit input
 form.addEventListener("submit", addTodo);
@@ -74,7 +94,7 @@ taskContainer.addEventListener("change", toggleCheckbox);
 
 // Duplikatprüfung
 
-//Filtern von Todos
+//Filtern von Todos ✅
 
 const active = document.querySelector("#active");
 const done = document.querySelector("#done");
@@ -121,7 +141,7 @@ all.addEventListener("click", function () {
   showTodos("all");
 });
 
-//Erledigte ToDos entfernen
+//Erledigte ToDos entfernen ✅
 const clear = document.querySelector(".btn-clear");
 
 function removeDone(_event) {
@@ -138,8 +158,12 @@ function removeDone(_event) {
       todos.splice(i, 1);
     }
   }
+  saveTodos();
 }
-
 clear.addEventListener("click", removeDone);
 
-//Lokaler Speicher Adaption
+// Initial load of todos from local storage
+document.addEventListener("DOMContentLoaded", function () {
+  loadTodos(); // Zuerst die Todos laden
+  saveTodos(); // Dann die Todos speichern (falls welche geladen wurden)
+});
